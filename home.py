@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from utils import utils
 
 st.title("Easy Excel!")
 
@@ -26,6 +27,9 @@ if file is not None:
         final = final.sort_values(by=sort_by)
         st.dataframe(final.head(8))
 
-        if st.download_button("Download", data=final.to_csv(index=False), file_name="easy_excel.xlsx"):
-            st.success("Downloaded!")
+        final.to_excel("easy.xlsx", index=False)
+
+        with open('easy.xlsx', 'rb') as excel_file:
+            if st.download_button(label = 'Download', data = excel_file, file_name = 'easy.xlsx', mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'):
+                st.success("Downloaded")
         
