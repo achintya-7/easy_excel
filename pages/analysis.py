@@ -20,22 +20,24 @@ if file is not None:
         st.write(cols)
 
     if st.checkbox("Confirm"):
+        df = df[df[cols] != 'ab']
+        df = df[df[cols] != 'Ab']
+        df = df[df[cols] != 'AB']
+        
         max = st.number_input("Enter max marks", value=100)
-        bins = [0, 33, 41, 51, 61, 71, 81, 91, 100]
+        bins = [0, 33, 40, 50, 60, 70, 80, 90, 100]
         labels = ["Below 33", "33-40", "41-50", "51-60", "61-70", "71-80", "81-90", "91-100"]
 
         if max == 0:
             st.write("Max marks cannot be zero")
         else:
-            df[cols] = pd.to_numeric(df[cols], errors='coerce')
-            df[cols] = df.dropna()
+            
             df[cols] = df[cols] * 100 / max
             df[cols] = df[cols].astype(int)
-
             df['Ranges'] = pd.cut(df[cols], bins=bins, labels=labels)
-
+            
             st.write("## Analysis")
-            st.dataframe(df.groupby('Ranges').count())
+            st.dataframe(df.groupby('Ranges').count()[cols])
 
 
         
