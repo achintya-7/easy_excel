@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from utils import utils
 
 st.title("Easy Excel!")
 
